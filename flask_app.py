@@ -75,3 +75,20 @@ def dashboard():
 # ================= MAIN =================
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+from tester.runner import run_all_tests
+from storage import init, save_run, list_runs
+
+init()
+
+@app.route("/run")
+def run():
+    result = run_all_tests()
+    save_run(result["passed"], result["failed"])
+    return result
+
+
+@app.route("/dashboard")
+def dashboard():
+    rows = list_runs()
+    return render_template("dashboard.html", rows=rows)
