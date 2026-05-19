@@ -82,10 +82,8 @@ from storage import init, save_run, list_runs
 init()
 
 @app.route("/run")
-def run():
-    result = run_all_tests()
-    save_run(result["passed"], result["failed"])
-    return result
+def run_api_test():
+    return jsonify(run_test())
 
 
 @app.route("/dashboard")
